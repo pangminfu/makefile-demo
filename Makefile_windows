@@ -1,0 +1,16 @@
+
+.PHONY:
+
+CAL_VER := v$(shell powershell Get-Date -Format "yyyy.MM.dd.HHmm")
+
+release:
+	@echo "Creating and pushing a git tag: $(CAL_VER)"
+	@cmd /c "set TAG=$(CAL_VER) && git tag $(CAL_VER) && git push --atomic origin $(CAL_VER) && echo $(CAL_VER)"
+	@echo "hello"
+
+deploy-dev:
+	@echo "Select a tag to deploy to dev:"
+	@for /f %%a in ('git tag --sort=-committerdate ^| head -n 10') do (
+		set /p tag=Enter the tag to deploy: %%a
+		echo !tag!
+	)

@@ -1,0 +1,11 @@
+.PHONY:
+
+CAL_VER := v$(shell date "+%Y.%m.%d.%H%M")
+
+release:
+	@( \
+	TAG=$(CAL_VER); \
+	git tag $$TAG; \
+	git push --atomic origin $$TAG; \
+	echo $$TAG \
+	)
